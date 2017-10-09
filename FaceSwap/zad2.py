@@ -39,7 +39,7 @@ cameraImg = cap.read()[1]
 
 # cv2.resize(, (0, 0), fx=0.5, fy=0.5)
 textureImg = cv2.imread(image_name)
-#cv2.imshow("textureImg", textureImg)
+cv2.imshow("textureImg", textureImg)
 
 textureCoords = utils.getFaceTextureCoords(textureImg, mean3DShape, blendshapes, idxs2D, idxs3D, detector, predictor)
 renderer = FaceRendering.FaceRenderer(cameraImg, textureImg, textureCoords, mesh)
