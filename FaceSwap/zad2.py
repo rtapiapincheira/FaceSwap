@@ -22,7 +22,7 @@ predictor_path = "../shape_predictor_68_face_landmarks.dat"
 image_name = "../data/jolie.jpg"
 #the smaller this value gets the faster the detection will work
 #if it is too small, the user's face might not be detected
-maxImageSizeForDetection = 320
+maxImageSizeForDetection = 360
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(predictor_path)
@@ -37,12 +37,19 @@ cap = cv2.VideoCapture(0)
 writer = None
 cameraImg = cap.read()[1]
 
+# cv2.resize(, (0, 0), fx=0.5, fy=0.5)
 textureImg = cv2.imread(image_name)
+#cv2.imshow("textureImg", textureImg)
+
 textureCoords = utils.getFaceTextureCoords(textureImg, mean3DShape, blendshapes, idxs2D, idxs3D, detector, predictor)
 renderer = FaceRendering.FaceRenderer(cameraImg, textureImg, textureCoords, mesh)
 
 while True:
     cameraImg = cap.read()[1]
+    cameraImg = cv2.flip(cameraImg, 1)
+
+    ###cameraImg = cv2.resize(cameraImg, (0, 0), fx=0.5, fy=0.5)
+
     shapes2D = utils.getFaceKeypoints(cameraImg, detector, predictor, maxImageSizeForDetection)
 
     if shapes2D is not None:
@@ -71,7 +78,7 @@ while True:
     if writer is not None:
         writer.write(cameraImg)
 
-    cv2.imshow('image', cameraImg)
+    #cv2.imshow('image', cameraImg)
     key = cv2.waitKey(1)
 
     if key == 27:
