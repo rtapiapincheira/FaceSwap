@@ -41,7 +41,7 @@ if len(all_images) == 0:
     exit(1)
 
 # Time before rotating the images
-time_before_change = 10000
+time_before_change = 30000
 
 # The smaller this value gets the faster the detection will work if it is too small, the user's face might not be
 # detected
@@ -69,6 +69,8 @@ current_image = 0
 
 # This will force the image to be processed as soon as entering the loop
 last_processed = 0
+
+cv2.namedWindow("test", cv2.WND_PROP_FULLSCREEN)
 
 while True:
 
@@ -123,7 +125,17 @@ while True:
     if writer is not None:
         writer.write(cameraImg)
 
-    # cv2.imshow('image', cameraImg)
+    display_width = 1440
+    display_height = 900
+
+    # Comentar la siguiente linea para evitar "agrandar" la imagen para que se ajuste a la pantalla
+    cameraImg = cv2.resize(cameraImg, (display_width, display_height))
+
+    cv2.imshow("test", cameraImg)
+
+    # Comentar para quitar el fullscreen
+    cv2.setWindowProperty("test", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
     key = cv2.waitKey(1)
 
     if key == 27:

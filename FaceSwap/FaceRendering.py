@@ -6,12 +6,13 @@ from OpenGL.GLU import *
 
 import numpy as np
 
-   
+
 def setOrtho(w, h):
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     glOrtho(0, w, h, 0, -1000, 1000)
     glMatrixMode(GL_MODELVIEW)
+
 
 def addTexture(img):
     textureId = glGenTextures(1)
@@ -25,13 +26,14 @@ def addTexture(img):
 
     return textureId
 
+
 class FaceRenderer:
     def __init__(self, targetImg, textureImg, textureCoords, mesh):
         self.h = targetImg.shape[0]
         self.w = targetImg.shape[1]
 
         pygame.init()
-        pygame.display.set_mode((self.w, self.h), DOUBLEBUF|OPENGL)
+        pygame.display.set_mode((self.w, self.h), DOUBLEBUF|OPENGL)#|FULLSCREEN)
         setOrtho(self.w, self.h)
 
         glEnable(GL_DEPTH_TEST)
